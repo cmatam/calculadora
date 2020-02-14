@@ -6,7 +6,7 @@
 	</head>
 	<body>
 		<div id="login">
-			<a href="https://api.instagram.com/oauth/authorize/?client_id=esperanzafrs&redirect_uri=https://petrocal.000webhostapp.com/ig.php&response_type=token">Login</a>
+			<a href="https://www.instagram.com/oauth/authorize?client_id=478654202804198&redirect_uri=https://petrocal.000webhostapp.com/ig.php&scope=user_profile,user_media&response_type=code">Login</a>
 		</div>
 		<script>
 		
@@ -18,12 +18,24 @@
 			$.post('https://petroapp-price.petro.gob.ve/price/',
 			{
 				/**
-				 * https://api.instagram.com/oauth/access_token \
+https://api.instagram.com/oauth/authorize
+  ?client_id={app-id}
+  &redirect_uri={redirect-uri}
+  &scope=user_profile,user_media
+  &response_type=code
+
+  https://socialsizzle.herokuapp.com/auth/?code=AQDp3TtBQQ...#_
+
+curl -X POST \
+  https://api.instagram.com/oauth/access_token \
   -F client_id={app-id} \
   -F client_secret={app-secret} \
   -F grant_type=authorization_code \
   -F redirect_uri={redirect-uri} \
   -F code={code}
+
+  curl -X GET \
+  'https://graph.instagram.com/{user-id}?fields=id,username&access_token={access-token}'
 				 */
 			},
 			function(json)
