@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Seguidores</title>
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-155862397-1"></script>
+		<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'UA-155862397-1');
+		</script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	</head>
+	<body>
+		ESTADO:<span id="estado"></span><br><br>
+		<input type="text" id="valor" value=""><br><br>
+		<button onclick="consultar_seguidores()">Buscar</button><br><br>
+
+		SEGUIDORES: <span id="seg"></span><br><br>
+
+		<script>
+		
+		function consultar_seguidores()
+		{
+			id= $("#valor").val();
+			$("#estado").html("Consultando: "+id);
+			$.get('https://www.instagram.com/'+id+'/',
+			function(json)
+			{
+				$("#estado").html("OK");
+				var ini = json.indexOf('edge_followed_by');
+				var fin = json.indexOf('followed_by_viewer');
+				var res = json.substring(ini, fin);
+				console.log(res);
+
+				var ini = res.indexOf('{');
+				var fin = res.indexOf('}');
+				var valor = res.substring(ini, fin).split(':');
+
+				console.log(valor[1]);
+				$("#seg").html(valor[1]);
+			}).fail(
+			function(json)
+			{
+				$("#estado").html("Error");
+			});
+		}
+
+		window.onload = function()
+		{
+			consultar_precios();
+			;
+		};
+		</script>
+	</body>
+</html>
